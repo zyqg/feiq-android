@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_refresh"
+        android:title="刷新"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_files"
+        android:title="文件"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_global_search"
+        android:title="全局搜索"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_group_send"
+        android:title="联系人分组"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_add_ip"
+        android:title="添加 IP"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_settings"
+        android:title="设置"
+        app:showAsAction="never" />
+</menu>

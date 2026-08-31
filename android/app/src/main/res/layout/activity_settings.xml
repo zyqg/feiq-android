@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/surface_alt"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/primary"
+        android:minHeight="56dp"
+        app:navigationIcon="@drawable/ic_back"
+        app:title="设置"
+        app:titleTextColor="#FFFFFF" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingBottom="24dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="14dp"
+            android:paddingTop="14dp"
+            android:paddingEnd="14dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_soft_panel"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/settingsAvatar"
+                    android:layout_width="54dp"
+                    android:layout_height="54dp"
+                    android:background="@drawable/avatar_circle"
+                    android:gravity="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/settingsTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="飞秋安卓版"
+                        android:textColor="@color/text_primary"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/settingsSubtitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="13sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                style="@style/SettingGroup"
+                android:text="个人信息" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_soft_panel"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/rowNick"
+                    style="@style/SettingRow"
+                    android:foreground="?attr/selectableItemBackground">
+                    <TextView
+                        style="@style/SettingTitle"
+                        android:text="昵称" />
+                    <TextView
+                        android:id="@+id/valNick"
+                        style="@style/SettingValue" />
+                </LinearLayout>
+
+                <View style="@style/SettingDivider" />
+
+                <LinearLayout
+                    android:id="@+id/rowGroup"
+                    style="@style/SettingRow"
+                    android:foreground="?attr/selectableItemBackground">
+                    <TextView
+                        style="@style/SettingTitle"
+                        android:text="我的分组" />
+                    <TextView
+                        android:id="@+id/valGroup"
+                        style="@style/SettingValue" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                style="@style/SettingGroup"
+                android:text="外观" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_soft_panel"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/rowNight"
+                    style="@style/SettingRow"
+                    android:foreground="?attr/selectableItemBackground">
+                    <TextView
+                        style="@style/SettingTitle"
+                        android:text="夜间模式" />
+                    <TextView
+                        android:id="@+id/valNight"
+                        style="@style/SettingValue" />
+                </LinearLayout>
+
+                <View style="@style/SettingDivider" />
+
+                <LinearLayout
+                    android:id="@+id/rowFont"
+                    style="@style/SettingRow"
+                    android:foreground="?attr/selectableItemBackground">
+                    <TextView
+                        style="@style/SettingTitle"
+                        android:text="字体大小" />
+                    <TextView
+                        android:id="@+id/valFont"
+                        style="@style/SettingValue" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                style="@style/SettingGroup"
+                android:text="通知" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_soft_panel"
+                android:orientation="vertical">
+
+                <LinearLayout style="@style/SettingRow">
+                    <TextView
+                        style="@style/SettingTitle"
+                        android:text="新消息通知" />
+                    <Switch
+                        android:id="@+id/swNotify"
+                        style="@style/SettingSwitch" />
+                </LinearLayout>
+
+                <View style="@style/SettingDivider" />
+
+                <LinearLayout style="@style/SettingRow">
+                    <TextView
+                        style="@style/SettingTitle"
+                        android:text="振动提醒" />
+                    <Switch
+                        android:id="@+id/swVibrate"
+                        style="@style/SettingSwitch" />
+                </LinearLayout>
+
+                <View style="@style/SettingDivider" />
+
+                <LinearLayout style="@style/SettingRow">
+                    <TextView
+                        style="@style/SettingTitle"
+                        android:text="声音提醒" />
+                    <Switch
+                        android:id="@+id/swSound"
+                        style="@style/SettingSwitch" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                style="@style/SettingGroup"
+                android:text="文件与网络" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_soft_panel"
+                android:orientation="vertical">
+
+                <LinearLayout style="@style/SettingRow">
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="自动接收文件"
+                            android:textColor="@color/text_primary"
+                            android:textSize="15sp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:text="建议只在可信局域网开启"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                    <Switch
+                        android:id="@+id/swAutoFile"
+                        style="@style/SettingSwitch"
+                        android:layout_marginStart="12dp" />
+                </LinearLayout>
+
+                <View style="@style/SettingDivider" />
+
+                <LinearLayout
+                    android:id="@+id/rowPort"
+                    style="@style/SettingRow"
+                    android:foreground="?attr/selectableItemBackground">
+                    <TextView
+                        style="@style/SettingTitle"
+                        android:text="协议端口" />
+                    <TextView
+                        android:id="@+id/valPort"
+                        style="@style/SettingValue" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                style="@style/SettingGroup"
+                android:text="数据与关于" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_soft_panel"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/rowClearAll"
+                    style="@style/SettingRow"
+                    android:foreground="?attr/selectableItemBackground">
+                    <TextView
+                        style="@style/SettingTitle"
+                        android:text="清空所有数据"
+                        android:textColor="@color/danger" />
+                </LinearLayout>
+
+                <View style="@style/SettingDivider" />
+
+                <LinearLayout
+                    android:id="@+id/rowAbout"
+                    style="@style/SettingRow"
+                    android:foreground="?attr/selectableItemBackground">
+                    <TextView
+                        style="@style/SettingTitle"
+                        android:text="关于飞秋安卓版" />
+                    <TextView
+                        android:id="@+id/valVersion"
+                        style="@style/SettingValue" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="28dp" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#0D9488</color>
+    <color name="primary_dark">#0F766E</color>
+    <color name="primary_soft">#CCFBF1</color>
+    <color name="primary_soft2">#F0FDFA</color>
+    <color name="accent">#14B8A6</color>
+    <color name="warning">#F97316</color>
+    <color name="bubble_out">#CFF7E5</color>
+    <color name="bubble_in">#FFFFFF</color>
+    <color name="chat_bg">#EEF4F3</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="surface_alt">#F6FAF9</color>
+    <color name="surface_elevated">#FFFFFF</color>
+    <color name="panel_bg">#F7FBFA</color>
+    <color name="bar_bg">#FFFFFF</color>
+    <color name="input_bg">#FFFFFF</color>
+    <color name="text_primary">#0F172A</color>
+    <color name="text_secondary">#475569</color>
+    <color name="text_tertiary">#94A3B8</color>
+    <color name="badge">#FA5151</color>
+    <color name="divider">#E2E8F0</color>
+    <color name="online">#20C870</color>
+    <color name="icon_normal">#64748B</color>
+    <color name="danger">#E64545</color>
+    <color name="scrim_soft">#140F172A</color>
+</resources>

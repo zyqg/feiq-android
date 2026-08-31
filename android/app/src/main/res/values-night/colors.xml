@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bubble_in">#2A2C2E</color>
+    <color name="bubble_out">#3F6B2E</color>
+    <color name="chat_bg">#121212</color>
+    <color name="surface">#1E1E1E</color>
+    <color name="bar_bg">#1A1A1A</color>
+    <color name="input_bg">#2A2C2E</color>
+    <color name="text_primary">#E6E6E6</color>
+    <color name="text_secondary">#9AA0A6</color>
+    <color name="divider">#2C2C2C</color>
+</resources>

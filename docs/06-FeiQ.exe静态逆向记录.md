@@ -1,0 +1,421 @@
+# FeiQ.exe 静态逆向记录
+
+> 生成方式：`python tools/feiq_pe_reverse.py FeiQ.exe --out-json tools/feiq_reverse_report.json --out-md docs/06-FeiQ.exe静态逆向记录.md`
+> 说明：这是静态扫描结果，不等同于抓包验证。凡是网络命令和字段格式，只有抓包确认后才能写进安卓兼容实现。
+
+## 样本信息
+- path: `G:\opencode\feiq\FeiQ.exe`
+- size: `18290688`
+- sha256: `480FF41B04BD8E93CE027B33A2D8DAE9531FDF9E4651C0D728E9F490C93F1AE6`
+- machine: `0x14c`
+- pe_kind: `PE32`
+- timestamp: `1370496409`
+- image_base: `0x400000`
+- entry_point: `0x977b33`
+- subsystem: `2`
+
+## PE 分区
+| 名称 | RVA | 虚拟大小 | Raw 偏移 | Raw 大小 | 属性 |
+|---|---:|---:|---:|---:|---:|
+| `.text` | `0x1000` | `0xa73581` | `0x400` | `0xa73600` | `0x60000020` |
+| `.rdata` | `0xa75000` | `0x1a982c` | `0xa73a00` | `0x1a9a00` | `0x40000040` |
+| `.data` | `0xc1f000` | `0x2fde8` | `0xc1d400` | `0x1c800` | `0xc0000040` |
+| `.rsrc` | `0xc4f000` | `0x537bb8` | `0xc39c00` | `0x537c00` | `0x40000040` |
+
+## 导入表重点
+- DLL 数量：`25`
+- 导入函数数量：`1091`
+- 网络相关 API：
+  - `WS2_32.dll`: `WSARecv, WSASend, WSASendTo, WSAIoctl, ntohs@15, connect@4, accept@1, recvfrom@17, sendto@20, WSAAsyncSelect@101, WSACleanup@116, WSAStartup@115, socket@23, getsockname@6, bind@2, inet_addr@10, setsockopt@21, listen@13, WSAGetLastError@111, recv@16, closesocket@3, select@18, send@19, inet_ntoa@11, htons@9`
+
+## 资源概览
+- resource RVA: `12906496`
+- resource size: `5471160`
+- 顶层资源类型：
+  - `BMP` directory=True
+  - `FRS` directory=True
+  - `GIF` directory=True
+  - `GIFDLL` directory=True
+  - `REGISTRY` directory=True
+  - `WAVE` directory=True
+  - `ZIPRES` directory=True
+  - `1` directory=True
+  - `2` directory=True
+  - `3` directory=True
+  - `4` directory=True
+  - `5` directory=True
+  - `6` directory=True
+  - `12` directory=True
+  - `14` directory=True
+  - `16` directory=True
+  - `23` directory=True
+  - `24` directory=True
+  - `240` directory=True
+  - `241` directory=True
+
+## 关键词命中
+只列静态字符串和大概位置。`ref_rva` 是 .text 里直接引用该字符串 VA 的位置，可作为后续反汇编入口。
+### 群聊/群组
+- `QUNMSGMARK`: 1 处
+  - `0xa7f64c` / `0xa80c4c` / `ascii`: QUNMSGMARK
+    - 引用：`0x2311a6` / `0x231da6`
+    - 引用：`0x239cc8` / `0x23a8c8`
+    - 引用：`0x23a15f` / `0x23ad5f`
+- `FeiQQunInfo`: 3 处
+  - `0xa9693c` / `0xa97f3c` / `utf-16le`: FeiQQunInfo
+    - 引用：`0x3382e4` / `0x338ee4`
+    - 引用：`0x3383f9` / `0x338ff9`
+    - 引用：`0x33e1b6` / `0x33edb6`
+  - `0xa98b18` / `0xa9a118` / `ascii`: FeiQQunInfo
+    - 引用：`0x3382e4` / `0x338ee4`
+    - 引用：`0x3383f9` / `0x338ff9`
+    - 引用：`0x33e1b6` / `0x33edb6`
+  - `0xad9316` / `0xada916` / `utf-16le`: 0AllFeiQQunInfo
+- `QunStruct`: 2 处
+  - `0xc1dd78` / `0xc1f978` / `ascii`: .?AV?$CArray@UQunStruct@@U1@@@
+  - `0xc21618` / `0xc23218` / `ascii`: .?AV?$CArray@UQunStruct@@AAU1@@@
+- `CNewQunDlg`: 1 处
+  - `0xc21d70` / `0xc23970` / `ascii`: .?AVCNewQunDlg@@
+- `CQunChatDlg`: 2 处
+  - `0xc1dad4` / `0xc1f6d4` / `ascii`: .?AV?$CArray@PAVCQunChatDlg@@PAV1@@@
+  - `0xc22794` / `0xc24394` / `ascii`: .?AVCQunChatDlg@@
+- `CQunManageDlg`: 1 处
+  - `0xc22800` / `0xc24400` / `ascii`: .?AVCQunManageDlg@@
+- `CQunSearchDlg`: 2 处
+  - `0xa8aec8` / `0xa8c4c8` / `ascii`: CQunSearchDlg
+  - `0xc1dd5c` / `0xc1f95c` / `ascii`: .?AVCQunSearchDlg@@
+- `CQunModiInfoDlg`: 1 处
+  - `0xc2281c` / `0xc2441c` / `ascii`: .?AVCQunModiInfoDlg@@
+- `CQunInputPwd`: 1 处
+  - `0xc227c8` / `0xc243c8` / `ascii`: .?AVCQunInputPwd@@
+- `QUN`: 60 处
+  - `0xa7f64c` / `0xa80c4c` / `ascii`: QUNMSGMARK
+    - 引用：`0x2311a6` / `0x231da6`
+    - 引用：`0x239cc8` / `0x23a8c8`
+    - 引用：`0x23a15f` / `0x23ad5f`
+  - `0xa7f668` / `0xa80c68` / `utf-16le`: SD_QUNINFO_VAL_
+    - 引用：`0x230b18` / `0x231718`
+    - 引用：`0x23a62a` / `0x23b22a`
+  - `0xa7f688` / `0xa80c88` / `utf-16le`: SD_QUNINFO_KEY_
+    - 引用：`0x230a2a` / `0x23162a`
+    - 引用：`0x23a504` / `0x23b104`
+  - `0xa7f6a8` / `0xa80ca8` / `utf-16le`: SD_QUNINFO_COUNT
+    - 引用：`0x23091f` / `0x23151f`
+    - 引用：`0x23a414` / `0x23b014`
+  - `0xa80398` / `0xa81998` / `utf-16le`: GX_Q_QunMsgOpt
+    - 引用：`0x22a40c` / `0x22b00c`
+    - 引用：`0x236665` / `0x237265`
+  - `0xa803b8` / `0xa819b8` / `utf-16le`: GX_Q_QunNotice
+    - 引用：`0x22a3a6` / `0x22afa6`
+    - 引用：`0x23660a` / `0x23720a`
+  - `0xa803d8` / `0xa819d8` / `utf-16le`: GX_Q_QunNoRecvBmp
+    - 引用：`0x22a340` / `0x22af40`
+    - 引用：`0x2365ab` / `0x2371ab`
+  - `0xa803fc` / `0xa819fc` / `utf-16le`: GX_Q_QunNoAdd
+    - 引用：`0x22a2da` / `0x22aeda`
+    - 引用：`0x23654c` / `0x23714c`
+  - `0xa80418` / `0xa81a18` / `utf-16le`: GX_Q_NoQunBeep
+    - 引用：`0x22a274` / `0x22ae74`
+    - 引用：`0x2364ed` / `0x2370ed`
+  - `0xa84f7c` / `0xa8657c` / `utf-16le`: %s#allqunzone.last
+    - 引用：`0x25a566` / `0x25b166`
+  - `0xa84fec` / `0xa865ec` / `utf-16le`: %s#allqunzone
+    - 引用：`0x25a25d` / `0x25ae5d`
+  - `0xa8aec8` / `0xa8c4c8` / `ascii`: CQunSearchDlg
+- `Qun`: 60 处
+  - `0xa7f64c` / `0xa80c4c` / `ascii`: QUNMSGMARK
+    - 引用：`0x2311a6` / `0x231da6`
+    - 引用：`0x239cc8` / `0x23a8c8`
+    - 引用：`0x23a15f` / `0x23ad5f`
+  - `0xa7f668` / `0xa80c68` / `utf-16le`: SD_QUNINFO_VAL_
+    - 引用：`0x230b18` / `0x231718`
+    - 引用：`0x23a62a` / `0x23b22a`
+  - `0xa7f688` / `0xa80c88` / `utf-16le`: SD_QUNINFO_KEY_
+    - 引用：`0x230a2a` / `0x23162a`
+    - 引用：`0x23a504` / `0x23b104`
+  - `0xa7f6a8` / `0xa80ca8` / `utf-16le`: SD_QUNINFO_COUNT
+    - 引用：`0x23091f` / `0x23151f`
+    - 引用：`0x23a414` / `0x23b014`
+  - `0xa80398` / `0xa81998` / `utf-16le`: GX_Q_QunMsgOpt
+    - 引用：`0x22a40c` / `0x22b00c`
+    - 引用：`0x236665` / `0x237265`
+  - `0xa803b8` / `0xa819b8` / `utf-16le`: GX_Q_QunNotice
+    - 引用：`0x22a3a6` / `0x22afa6`
+    - 引用：`0x23660a` / `0x23720a`
+  - `0xa803d8` / `0xa819d8` / `utf-16le`: GX_Q_QunNoRecvBmp
+    - 引用：`0x22a340` / `0x22af40`
+    - 引用：`0x2365ab` / `0x2371ab`
+  - `0xa803fc` / `0xa819fc` / `utf-16le`: GX_Q_QunNoAdd
+    - 引用：`0x22a2da` / `0x22aeda`
+    - 引用：`0x23654c` / `0x23714c`
+  - `0xa80418` / `0xa81a18` / `utf-16le`: GX_Q_NoQunBeep
+    - 引用：`0x22a274` / `0x22ae74`
+    - 引用：`0x2364ed` / `0x2370ed`
+  - `0xa84f7c` / `0xa8657c` / `utf-16le`: %s#allqunzone.last
+    - 引用：`0x25a566` / `0x25b166`
+  - `0xa84fec` / `0xa865ec` / `utf-16le`: %s#allqunzone
+    - 引用：`0x25a25d` / `0x25ae5d`
+  - `0xa8aec8` / `0xa8c4c8` / `ascii`: CQunSearchDlg
+- `群`: 80 处
+  - `0x1362d4` / `0x136ed4` / `gb18030`: 3缐U群
+  - `0x4668fc` / `0x4674fc` / `gb18030`: 婨瑝E膵M皦M群
+  - `0x4b6ac0` / `0x4b76c0` / `gb18030`: 婾魤U紜E級E膵M膲M群
+  - `0x6d1087` / `0x6d1c87` / `gb18030`: f塙袎M群
+  - `0x7c73ac` / `0x7c7fac` / `gb18030`: 媇袐M群
+  - `0xa29d43` / `0xa2a943` / `gb18030`: 烫烫烫烫烫烫虌M痖群s
+  - `0xa82088` / `0xa83688` / `utf-16le`: 个性配置.群设置
+    - 引用：`0x23d3ab` / `0x23dfab`
+  - `0xa84f5c` / `0xa8655c` / `utf-16le`: 所有群群日志 - 最近三天日志
+    - 引用：`0x25a594` / `0x25b194`
+  - `0xa84fdc` / `0xa865dc` / `utf-16le`: 所有群群日志
+    - 引用：`0x25a288` / `0x25ae88`
+  - `0xa8b150` / `0xa8c750` / `utf-16le`: 群主:%s  创建群时间:%s  群成员数:%d
+    - 引用：`0x29f429` / `0x2a0029`
+  - `0xa8b184` / `0xa8c784` / `utf-16le`: 群简介:%s
+  - `0xa8b194` / `0xa8c794` / `utf-16le`: 群名称:%s(%u)%s
+    - 引用：`0x29ee66` / `0x29fa66`
+
+### 表情/富文本
+- `SendFace`: 4 处
+  - `0xa865e0` / `0xa87be0` / `utf-16le`: %s\feiq\SendFace\%08x.gif
+    - 引用：`0x26de6c` / `0x26ea6c`
+  - `0xa88be0` / `0xa8a1e0` / `ascii`: SendFace
+    - 引用：`0x28b4d6` / `0x28c0d6`
+    - 引用：`0x4d4d16` / `0x4d5916`
+    - 引用：`0x5203a4` / `0x520fa4`
+  - `0xaa5904` / `0xaa6f04` / `utf-16le`: %s\feiq\SendFace\%08x%s
+    - 引用：`0x4046cd` / `0x4052cd`
+  - `0xaac6b4` / `0xaadcb4` / `utf-16le`: 如果您飞秋工作目录下面发送(SendFace)或接收文件夹(RecvFace)占用空间太大
+- `RecvFace`: 4 处
+  - `0xa88bec` / `0xa8a1ec` / `ascii`: RecvFace
+    - 引用：`0x28b3c7` / `0x28bfc7`
+    - 引用：`0x2b8387` / `0x2b8f87`
+    - 引用：`0x2b841a` / `0x2b901a`
+  - `0xa8da7c` / `0xa8f07c` / `utf-16le`: %s\feiq\RecvFace\%08x.gif
+    - 引用：`0x2b9cfc` / `0x2ba8fc`
+  - `0xaa5934` / `0xaa6f34` / `utf-16le`: %s\feiq\RecvFace\%08x%s
+    - 引用：`0x40460f` / `0x40520f`
+  - `0xaac6b4` / `0xaadcb4` / `utf-16le`: 如果您飞秋工作目录下面发送(SendFace)或接收文件夹(RecvFace)占用空间太大
+- `CustomFace`: 26 处
+  - `0xa7ac5c` / `0xa7c25c` / `utf-16le`: CustomFace
+    - 引用：`0x1d53b8` / `0x1d5fb8`
+    - 引用：`0x1d5613` / `0x1d6213`
+    - 引用：`0x28af7b` / `0x28bb7b`
+  - `0xa86510` / `0xa87b10` / `utf-16le`: %s\feiq\CustomFace\%d.gif
+    - 引用：`0x26b765` / `0x26c365`
+    - 引用：`0x3a2de3` / `0x3a39e3`
+    - 引用：`0x3a76d6` / `0x3a82d6`
+  - `0xa9eea8` / `0xaa04a8` / `utf-16le`: %s\feiq\CustomFace\CachePage%d.bmp
+    - 引用：`0x3a2251` / `0x3a2e51`
+    - 引用：`0x3a49ea` / `0x3a55ea`
+    - 引用：`0x3a4c8b` / `0x3a588b`
+  - `0xa9efe4` / `0xaa05e4` / `utf-16le`: %s\feiq\CustomFace\
+    - 引用：`0x3a5426` / `0x3a6026`
+  - `0xa9f018` / `0xaa0618` / `utf-16le`: %s\feiq\CustomFace\CachePage
+    - 引用：`0x3a531f` / `0x3a5f1f`
+  - `0xa9f09c` / `0xaa069c` / `utf-16le`: CUSTOMFACE
+    - 引用：`0x3a51b3` / `0x3a5db3`
+    - 引用：`0x3a5bbd` / `0x3a67bd`
+    - 引用：`0x40619a` / `0x406d9a`
+  - `0xa9f0cc` / `0xaa06cc` / `ascii`: \feiq\CustomFace\face.xml
+    - 引用：`0x3a4f8d` / `0x3a5b8d`
+    - 引用：`0x3a6f03` / `0x3a7b03`
+    - 引用：`0x3a7292` / `0x3a7e92`
+  - `0xa9f130` / `0xaa0730` / `utf-16le`: SUBCUSTOMFACE
+    - 引用：`0x3a619c` / `0x3a6d9c`
+    - 引用：`0x3a9534` / `0x3aa134`
+    - 引用：`0x3a95f4` / `0x3aa1f4`
+  - `0xa9f14c` / `0xaa074c` / `utf-16le`: %s\feiq\CustomFace\%s
+    - 引用：`0x3a6013` / `0x3a6c13`
+    - 引用：`0x3a65a6` / `0x3a71a6`
+    - 引用：`0x3a68b3` / `0x3a74b3`
+  - `0xa9f1c4` / `0xaa07c4` / `utf-16le`: %s\feiq\CustomFace
+    - 引用：`0x3a764d` / `0x3a824d`
+    - 引用：`0x53f811` / `0x540411`
+  - `0xa9f1f0` / `0xaa07f0` / `utf-16le`: %s\feiq\CustomFace\CachePage0.bmp
+    - 引用：`0x3a7607` / `0x3a8207`
+  - `0xa9f234` / `0xaa0834` / `ascii`: \feiq\CustomFace\1.gif
+    - 引用：`0x3a7566` / `0x3a8166`
+- `FeiQ custom faces`: 2 处
+  - `0xaadfc4` / `0xaaf5c4` / `ascii`: FeiQ custom faces
+    - 引用：`0x47dd59` / `0x47e959`
+    - 引用：`0x47e6bd` / `0x47f2bd`
+    - 引用：`0x48505a` / `0x485c5a`
+  - `0xaadfd8` / `0xaaf5d8` / `utf-16le`: FeiQ Custom Faces(*.fcf)|*.fcf||
+    - 引用：`0x47da10` / `0x47e610`
+    - 引用：`0x47e4db` / `0x47f0db`
+    - 引用：`0x484cd7` / `0x4858d7`
+- `face.xml`: 4 处
+  - `0xa9f0cc` / `0xaa06cc` / `ascii`: \feiq\CustomFace\face.xml
+    - 引用：`0x3a4f8d` / `0x3a5b8d`
+    - 引用：`0x3a6f03` / `0x3a7b03`
+    - 引用：`0x3a7292` / `0x3a7e92`
+  - `0xaa5a3c` / `0xaa703c` / `utf-16le`: 未找到face.xml文件.
+    - 引用：`0x405fac` / `0x406bac`
+  - `0xaa5a68` / `0xaa7068` / `utf-16le`: CustomFace\face.xml
+  - `0xaae0f4` / `0xaaf6f4` / `ascii`: face.xml
+    - 引用：`0x481c19` / `0x482819`
+- `.fcf`: 1 处
+  - `0xaadfd8` / `0xaaf5d8` / `utf-16le`: FeiQ Custom Faces(*.fcf)|*.fcf||
+    - 引用：`0x47da10` / `0x47e610`
+    - 引用：`0x47e4db` / `0x47f0db`
+    - 引用：`0x484cd7` / `0x4858d7`
+- `/:)`: 1 处
+  - `0xacfa68` / `0xad1068` / `utf-16le`: 微笑 /:)
+- `/~#>`: 6 处
+  - `0xa7ac84` / `0xa7c284` / `utf-16le`: /~#>
+    - 引用：`0x1d506e` / `0x1d5c6e`
+    - 引用：`0x26ae1f` / `0x26ba1f`
+    - 引用：`0x26c6c5` / `0x26d2c5`
+  - `0xa850dc` / `0xa866dc` / `utf-16le`: /~#>%08x<B~
+    - 引用：`0x26310e` / `0x263d0e`
+    - 引用：`0x53effd` / `0x53fbfd`
+  - `0xa850f4` / `0xa866f4` / `utf-16le`: /~#>%08x<G~
+    - 引用：`0x2630f1` / `0x263cf1`
+    - 引用：`0x53efe6` / `0x53fbe6`
+  - `0xaac640` / `0xaadc40` / `utf-16le`: /~#>%s<G~
+    - 引用：`0x4485a4` / `0x4491a4`
+  - `0xaac654` / `0xaadc54` / `utf-16le`: /~#>%s<B~
+    - 引用：`0x448569` / `0x449169`
+    - 引用：`0x4485df` / `0x4491df`
+  - `0xacd5d4` / `0xacebd4` / `ascii`: /~#>
+    - 引用：`0x1d506e` / `0x1d5c6e`
+    - 引用：`0x26ae1f` / `0x26ba1f`
+    - 引用：`0x26c6c5` / `0x26d2c5`
+- `{/font;`: 2 处
+  - `0xa7cf8c` / `0xa7e58c` / `utf-16le`: {/font;
+    - 引用：`0x1fd586` / `0x1fe186`
+    - 引用：`0x275c5f` / `0x27685f`
+    - 引用：`0x276936` / `0x277536`
+  - `0xa7d1b4` / `0xa7e7b4` / `ascii`: {/font;
+    - 引用：`0x1fd586` / `0x1fe186`
+    - 引用：`0x275c5f` / `0x27685f`
+    - 引用：`0x276936` / `0x277536`
+
+### 头像
+- `FaceImage`: 4 处
+  - `0xa7dccc` / `0xa7f2cc` / `utf-16le`:  table contact(mac TEXT, nickname TEXT, username TEXT, hostname TEXT, groupname TEXT, addr TEXT, faceimage int, ontime DOUBLE, other TEXT);
+  - `0xa7e27c` / `0xa7f87c` / `utf-16le`:  %s set nickname= ?, username= ?, hostname= ?, groupname= ?, addr= ?, faceimage= ?, ontime= ? where  mac='%s';
+  - `0xa7e360` / `0xa7f960` / `utf-16le`: INSERT INTO %s (mac, nickname, username, hostname, groupname, addr, faceimage, ontime, other) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+    - 引用：`0x21680c` / `0x21740c`
+  - `0xa97a20` / `0xa99020` / `utf-16le`: FaceImage
+    - 引用：`0x332614` / `0x333214`
+    - 引用：`0x33a4bb` / `0x33b0bb`
+- `Head`: 68 处
+  - `0xa7f74c` / `0xa80d4c` / `utf-16le`: SD_SELINFO_HEADSIZE_DATA
+    - 引用：`0x2306c5` / `0x2312c5`
+    - 引用：`0x2397ff` / `0x23a3ff`
+  - `0xa7f780` / `0xa80d80` / `utf-16le`: SD_SELINFO_HEADSIZE
+    - 引用：`0x23064d` / `0x23124d`
+    - 引用：`0x239787` / `0x23a387`
+  - `0xa83b74` / `0xa85174` / `utf-16le`: .head
+  - `0xa85d44` / `0xa87344` / `utf-16le`: .head.group
+  - `0xa85d64` / `0xa87364` / `utf-16le`: .head.ip
+  - `0xa85d80` / `0xa87380` / `utf-16le`: .head.name
+  - `0xa85e00` / `0xa87400` / `utf-16le`: .head.logo
+  - `0xa96a0c` / `0xa9800c` / `utf-16le`: CustomHeadPic
+  - `0xa9bf70` / `0xa9d570` / `ascii`: Error: Lzw header is corrupted
+    - 引用：`0x368c70` / `0x369870`
+  - `0xaa5576` / `0xaa6b76` / `utf-16le`: HeadPhoto
+  - `0xaa57e0` / `0xaa6de0` / `utf-16le`: HeadPhoto
+  - `0xaa5d2c` / `0xaa732c` / `ascii`: \feiq\UserHeadPhoto
+    - 引用：`0x408720` / `0x409320`
+    - 引用：`0x408e23` / `0x409a23`
+    - 引用：`0x4096cb` / `0x40a2cb`
+
+### 协议/网络
+- `IPMsg`: 28 处
+  - `0xa7b050` / `0xa7c650` / `utf-16le`: 对方正在使用飞鸽传书(IPMSG),无法进行协助连接! 您是否发送您的FeiQ程序给对方
+    - 引用：`0x1dc9a3` / `0x1dd5a3`
+  - `0xa7b280` / `0xa7c880` / `utf-16le`: 对方正在使用飞鸽传书(IPMSG),没有文件共享这功能! 您是否发送您的FeiQ程序给对方
+    - 引用：`0x1dd697` / `0x1de297`
+  - `0xa7b3f0` / `0xa7c9f0` / `utf-16le`: 对方正在使用飞鸽传书(IPMSG),无法进行与您进行语音对话! 您是否发送您的FeiQ程序给对方
+    - 引用：`0x1dd8a3` / `0x1de4a3`
+  - `0xa7cb48` / `0xa7e148` / `utf-16le`: 发送失败!对方正在使用飞鸽传书(IPMSG),无法接收图片或表情信息! 您是否发送您的FeiQ程序给对方
+    - 引用：`0x1f6989` / `0x1f7589`
+    - 引用：`0x1f6c7b` / `0x1f787b`
+    - 引用：`0x20ed8a` / `0x20f98a`
+  - `0xa7d6a8` / `0xa7eca8` / `utf-16le`: 对方正在使用飞鸽传书(IPMSG),因为飞鸽传飞不能获取MAC标识
+    - 引用：`0x20ec1d` / `0x20f81d`
+  - `0xa80800` / `0xa81e00` / `utf-16le`: GX_GN_GetIpmsgMacByHost
+    - 引用：`0x2297d5` / `0x22a3d5`
+    - 引用：`0x235ac3` / `0x2366c3`
+    - 引用：`0x8e975f` / `0x8ea35f`
+  - `0xa85e20` / `0xa87420` / `utf-16le`: .list.face.ipmsg
+  - `0xa96ab0` / `0xa980b0` / `utf-16le`: 这是IPMSG V2.04 中文版自动更新消息.
+    - 引用：`0x3375c3` / `0x3381c3`
+    - 引用：`0x344900` / `0x345500`
+  - `0xa96b26` / `0xa98126` / `utf-16le`: 注意: ipmsg v2.00-2.02 版本中的传输文件/文件夹功能存在缓冲区溢出问题
+  - `0xa975a0` / `0xa98ba0` / `utf-16le`: TipMsgBlockMode
+    - 引用：`0x33351e` / `0x33411e`
+    - 引用：`0x33b54f` / `0x33c14f`
+  - `0xa975c0` / `0xa98bc0` / `utf-16le`: AutoSetTipMsgMode
+    - 引用：`0x3334ee` / `0x3340ee`
+    - 引用：`0x33b51f` / `0x33c11f`
+  - `0xa97f18` / `0xa99518` / `utf-16le`: GetIpmsgMacByHost
+    - 引用：`0x331bd3` / `0x3327d3`
+    - 引用：`0x33a66e` / `0x33b26e`
+- `Tcp Socket`: 2 处
+  - `0xaacd74` / `0xaae374` / `gb18030`: 创建Tcp Socket 失败!
+    - 引用：`0x45e697` / `0x45f297`
+  - `0xaacd78` / `0xaae378` / `ascii`: Tcp Socket
+- `Udp`: 17 处
+  - `0x79f50` / `0x7ab50` / `ascii`: uDPVj
+  - `0xa8e3b0` / `0xa8f9b0` / `ascii`: @UDP@.msg
+    - 引用：`0x2e7827` / `0x2e8427`
+    - 引用：`0x2e7832` / `0x2e8432`
+  - `0xa9889c` / `0xa99e9c` / `utf-16le`: BmpUdpTrys
+    - 引用：`0x330c72` / `0x331872`
+    - 引用：`0x339785` / `0x33a385`
+  - `0xa988d0` / `0xa99ed0` / `utf-16le`: BmpUdpSendSize
+    - 引用：`0x330bfe` / `0x3317fe`
+    - 引用：`0x339768` / `0x33a368`
+  - `0xaaabd2` / `0xaac1d2` / `utf-16le`: - 飞秋(FeiQ)是一款局域网内即时通信软件, 基于 TCP/IP(UDP)
+  - `0xad9438` / `0xadaa38` / `utf-16le`: @UDP@
+    - 引用：`0x5ccda1` / `0x5cd9a1`
+  - `0xc232b8` / `0xc24eb8` / `ascii`: .?AVCUdpSocket@@
+  - `0xc3953c` / `0xc3b13c` / `ascii`: .?AVCUdpListenerThreadPool@base@@
+  - `0xc39568` / `0xc3b168` / `ascii`: .?AVCUdpListenerThread@base@@
+  - `0xc39610` / `0xc3b210` / `ascii`: .?AVCUdpServer@base@@
+  - `0xc39630` / `0xc3b230` / `ascii`: .?AVCUdpSocket@base@@
+  - `0xcd205e` / `0xce745e` / `gb18030`: ъw渞UDP睿`%}6U8
+- `2425`: 1 处
+  - `0xad3ef0` / `0xad54f0` / `utf-16le`: 2425
+    - 引用：`0x566de8` / `0x5679e8`
+
+## 内置表情码表
+- 静态提取到一段 96 项纯代码表。结合实测电脑端第一个微笑发送 `/:)`，可推断该表在二进制中按资源倒序存放：`1.gif` 对应最后一项 `/:)`。
+- 前 20 项推断映射：
+  - `1.gif` -> `/:)` @ `0xad0120`
+  - `2.gif` -> `/:~` @ `0xad0118`
+  - `3.gif` -> `/:*` @ `0xad0110`
+  - `4.gif` -> `/:|` @ `0xad0108`
+  - `5.gif` -> `/8-)` @ `0xad00fc`
+  - `6.gif` -> `/:<` @ `0xad00f4`
+  - `7.gif` -> `/:$` @ `0xad00ec`
+  - `8.gif` -> `/:X` @ `0xad00e4`
+  - `9.gif` -> `/:Z` @ `0xad00dc`
+  - `10.gif` -> `/:'(` @ `0xad00d0`
+  - `11.gif` -> `/:-|` @ `0xad00c4`
+  - `12.gif` -> `/:@` @ `0xad00bc`
+  - `13.gif` -> `/:P` @ `0xad00b4`
+  - `14.gif` -> `/:D` @ `0xad00ac`
+  - `15.gif` -> `/:O` @ `0xad00a4`
+  - `16.gif` -> `/<!!>` @ `0xad0098`
+  - `17.gif` -> `/:(` @ `0xad0090`
+  - `18.gif` -> `/:+` @ `0xad0088`
+  - `19.gif` -> `/:#` @ `0xad0080`
+  - `20.gif` -> `/:Q` @ `0xad0078`
+- 完整映射写在 `tools/feiq_reverse_report.json` 的 `emoticons.asset_map`。
+
+## 当前能确认的结论
+- `FeiQ.exe` 内确实存在完整的群聊/群管理相关界面和数据结构痕迹，包括 `CNewQunDlg`、`CQunChatDlg`、`CQunManageDlg`、`FeiQQunInfo`、`QUNMSGMARK`。这只能证明电脑端有私有群聊实现，不能直接证明 UDP/TCP 包格式。
+- 自定义表情/内联图片相关痕迹很明确：`SendFace`、`RecvFace`、`CustomFace`、`FeiQ custom faces`、`face.xml`、`/~#>`、`{/font;` 均可在二进制或运行目录中找到。内联图片和字体标签已由抓包验证过，静态结果与现有实现方向一致。
+- 头像相关静态证据目前偏弱，更多集中在配置/COM 属性名，如 `FaceImage`、`UserCustomHeadPic`、`UserCustomPicture`。还不能仅靠静态字符串确认头像网络同步命令。
+- 导入表可确认它使用 Winsock 一类网络 API；具体命令号仍需要结合抓包或反汇编控制流确认。
+
+## 不能伪造、必须继续验证
+- 电脑端“新建群/群聊”的创建、搜索、入群、成员刷新、群消息、群公告协议。
+- 电脑端可见头像同步、头像拉取/下发协议。
+- 内置表情码表已经从 `FeiQ.exe` 静态提取出 96 项，并已按 `1.gif -> /:)` 的实测结果校正资源顺序。后续仍可用电脑端逐个发送做动态复核，但不再需要用 QQ 猜测码表。
+- 富文本更复杂格式，例如混排图片、字体变化作用范围、历史记录保存格式。

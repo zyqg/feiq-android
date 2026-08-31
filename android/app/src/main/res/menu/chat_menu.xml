@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_load_older"
+        android:title="加载更早记录"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_search"
+        android:title="搜索"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_export"
+        android:title="导出备份"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_rich_text"
+        android:title="文字格式"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_file_rule"
+        android:title="文件接收规则"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_clear"
+        android:title="清空聊天"
+        app:showAsAction="never" />
+</menu>

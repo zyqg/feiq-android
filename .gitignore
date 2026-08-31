@@ -1,0 +1,24 @@
+# Android build outputs
+android/.gradle/
+android/build/
+android/app/build/
+**/build/
+*.apk
+
+# IDE and local config
+.idea/
+*.iml
+local.properties
+.DS_Store
+
+# Local AI/editor state
+.claude/
+.codex/
+.cursor/
+.agents/
+
+# Non-project source and binaries in the workspace root
+/FeiQ.exe
+/feiq/
+/飞秋二次开发源代码及文档/
+/tools/

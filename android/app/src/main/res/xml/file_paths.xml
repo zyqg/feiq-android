@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <external-files-path name="received" path="Download/received/" />
+    <external-files-path name="ext_files" path="." />
+    <files-path name="internal" path="." />
+</paths>
